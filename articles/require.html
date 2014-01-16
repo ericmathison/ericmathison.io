@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Eric Mathison | Understanding require and Friends in Ruby</title>
+<link rel="stylesheet" href="/style.css">
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head><body>
+
+<nav>
+	<a href="/">Home</a>
+</nav>
+
+<div class="container">
+<h1>Understanding <code>require</code> and Friends in Ruby</h1>
+
+<h4>Author: Eric Mathison</h4>
+
+<h4>Date: Sat Sep 14 17:06:03 PDT 2013</h4>
+
+<h4>Last edited: Fri Sep 27 22:56:01 PDT 2013</h4>
+
+<h4>Last checked for accuracy and currency: Fri Sep 27 22:56:01 PDT 2013</h4>
+
+<p>Ruby's <code>require</code> method is a tool for referencing and executing code that is
+not actually contained in the current file. My initial attempts at using
+<code>require</code> left me a bit confused. Not until later did I realize that Ruby's
+<code>require</code> method sits atop something more organized and elegant than I had
+realized. It turns out that <code>require</code>s main use case is generally not one off,
+relative references to other random Ruby files as I had expected. Instead,
+<code>require</code> is generally used to look in certain pre-determined directory
+locations for Ruby libraries. I had previously sort of assumed that a require
+in Ruby would be something like the relative references to an image in CSS or a
+reference to a JavaScript file in HTML. Not so. In fact, Ruby's <code>require</code> seems
+to have drawn several concepts from the UNIX environment.</p>
+
+<h2>So How Does Ruby's <code>require</code> Work Anyway?</h2>
+
+<p>The best way to think of <code>require</code> is in relation to the UNIX <code>$PATH</code> variable.
+Just by way of a refresher, the <code>$PATH</code> variable in UNIX is a list of
+directories where executables can be found. So when you type the name of a
+program on any UNIX terminal, your computer is looking through the executable
+files in the directories specified in your <code>$PATH</code> variable. <code>require</code> does
+something very similar. When, for example, you write <code>require 'set'</code> at the top
+of your Ruby file, you are telling Ruby to look through a bunch of directories
+for a library called set.rb (Ruby's set library).</p>
+
+<p>So where does Ruby look for set.rb? Well, once again, Ruby has something very
+similar to UNIX's <code>$PATH</code> variable. It is the global variable <code>$LOAD_PATH</code> also
+sometimes known by it's ugly and undescriptive alias <code>$:</code> (which I don't suggest
+using by the way--short though it may be). It is an array of directory names
+where Ruby looks when it comes across a <code>require</code>.</p>
+
+<p>Here's where the analogy falls short however. The UNIX <code>$PATH</code> generally
+contains a list of bin directories while the Ruby <code>$LOAD_PATH</code> contains an array
+of lib directories. Well, what on earth are lib and bin directories and what
+difference does it make? The lib and bin directories are another Ruby concept
+which originally comes from UNIX. A bin directory is a place for standalone
+executables. The name bin is a reference to binary files (as opposed to plain
+text files) since before the days of ubiquitous scripting languages, executables
+needed to be compiled from source into a binary file. Ruby, of course, is an
+interpreted language and doesn't need to be compiled but the concept of
+standalone executables still applies. A lib directory on the other hand is where
+library code goes. This is the code you reference in other code. Referencing
+library code is the whole reason we need <code>require</code>s in the first place.</p>
+
+<p>When you require a library you are telling that code to be executed any time the
+file containing the <code>require</code> is executed. The required file is executed only
+once. Even if the require is repeated in the same file (why anyone would want to
+do this I don't know) it will be executed only once*. This is because Ruby
+checks whether the <code>$LOADED_FEATURES</code> variable a.k.a <code>$"</code> (not to be confused
+with <code>$LOAD_PATH</code>) already contains the name of the required file before
+executing</p>
+
+<p>The really nice thing about the way <code>require</code> works in combination with the load
+path is that as long as a library is in the load path, there is no need to
+specify the full path or even to know where exactly it is located. You don't
+even need to put the '.rb' on the end since that is implicit. All you need to
+put is the extensionless name of the file. Personally, I think this makes for
+some very clean looking code.</p>
+
+<p>It is important to also realize that in your application, there is generally no
+need to add directories to the load path manually as this is the environment's
+job. I mentioned above that the <code>$LOAD_PATH</code> contains an array of lib directory
+paths. RubyGems will, for example, automatically add the lib directory of gems
+installed on your computer to the load path. Well, that's actually only mostly
+true. If you <em>actually</em> run a Ruby script that just outputs <code>$LOAD_PATH</code> without
+doing anything else, you won't see every single installed gem's load path
+listed. This is because RubyGems lazily loads Gem's lib directories. So if you
+want to see your gem's lib directory listed in the load path you have to
+actually require it first. But things work essentially the same as if every
+single gem's lib directory was on the load path.</p>
+
+<p>Slightly unrelated to the topic of this article but perhaps also interesting to
+note is that RubyGems will also add the contents of a gem's bin directory to the
+UNIX <code>$PATH</code> variable so that a gem's executables can be run from the terminal.</p>
+
+<h2>Understanding <code>load</code></h2>
+
+<p>The <code>load</code> method is very similar to <code>require</code>. The main differences is that it
+will run the referenced code as many times as <code>load</code> calls it. As I mentioned
+above, <code>require</code> only runs the first time.</p>
+
+<p><code>load</code> must be given the '.rb' file extension because it won't be inferred like
+it was with <code>require</code>.</p>
+
+<p>All in all, I would say that <code>load</code> has a fairly small amount of usefulness.
+Probably it's main use case is re-running a file from a Ruby REPL (like pry or
+irb) after making some edits.</p>
+
+<h2>Understanding <code>require_relative</code></h2>
+
+<p><code>require_relative</code> is essentially what I had originally thought <code>require</code> would
+be used for. If you want to reference a file relative to another file, not
+treat it like a library, and bypass the load path, this is the tool for you.</p>
+
+<p>In order to understand the need for <code>require_relative</code>, we must understand a bit
+more about <code>require</code>. So far, the only use I've mentioned for <code>require</code> is
+executing code on the load path (code that would be considered a library).
+That's for good reason. That's what it is good for and you probably shouldn't be
+using <code>require</code> for anything else.</p>
+
+<p>In the past (Ruby 1.8 and earlier), if you wanted to to a one off <code>require</code>
+without managing the load path, the best way would have been to generate the
+full path to that file and pass it as an argument to <code>require</code>. It would look
+something like this:</p>
+
+<pre><code>require File.expand_path('my_file', File.dirname(__FILE__))
+</code></pre>
+
+<p><code>File.expand_path</code> gives the full path to the file specified in the first
+argument. Specifying the second argument essentially says, look for my_file.rb
+relative to such and such directory. <code>File.dirname(__FILE__)</code> returns the
+directory path for the current file (that this line was written in). So put
+together, <code>require</code> is getting passed the full path to my_file.rb which is the
+file sitting in the same directory in which this line was written. Another way
+of writing the same thing looks like this:</p>
+
+<pre><code>require File.expand_path('../my_file', __FILE__)
+</code></pre>
+
+<p>The difference here is that the "directory" we are passing in the second
+parameter isn't actually a directory. It is just the current file. Fortunately,
+<code>File.expand_path</code> doesn't care since theoretically, we could make a directory
+called <code>'current_file.rb'</code> strange as that would be. Assuming I'm running this
+line from my home directory, without the <code>'../'</code> before the file name in the
+first parameter, the string we are passing to <code>require</code> would look something
+like this: <code>'/home/eric/current_file.rb/myfile.rb'</code>. From <code>File.expand_path</code>'s
+perspective, adding the <code>'../'</code> brings us up a directory but from our
+perspective, it simply causes current_file.rb to be removed from the path. So,
+with <code>'../'</code> back in place, the path would expand to <code>'/home/eric/my_file.rb'</code>.</p>
+
+<p>Let me back up and explain why passing <code>require</code> the full path to a file would
+even be necessary. When I write something like <code>require '../my_file.rb'</code>, that
+path is relative to the current working directory of the process executing this
+line NOT necessarily the file it was written in. That's important and it means
+that depending on what directory you are in when you run <code>ruby current_file.rb</code>,
+your code may or may not be able to find your relative reference to my_file.rb.
+Yikes!</p>
+
+<p>Enter <code>require_relative</code> stage left. <code>require_relative</code> does essentially what
+the above two examples using <code>require</code> do except with the added benefit of a
+clean syntax. So instead of needing that massive monstrosity, all that
+<code>require_relative</code> needs to do is <code>require_relative 'myfile'</code> and my file will
+be reference relative the file containing that line (current_file.rb in our
+example). These techniques are not 100% equivalent though. Ruby's implementation
+of <code>require_relative</code> actually references the call stack (not <code>__FILE__</code>) in
+order to determine which file the references are relative to. So in a config.ru
+file which is used to start a Rack application, it is not currently possible to
+use <code>require_relative</code> as the contents of this file are ran through the <code>eval</code>
+method instead of being ran directly. That means that Ruby can't determine which
+file to be relative to.</p>
+
+<p>Also note that even if you are running current_file.rb from it's containing
+directory (so that the current working directory of the process is the same as
+the location of current_file.rb), it is not possible to do something like
+<code>require 'myfile'</code> although <code>require './myfile'</code> would work. This is because
+since Ruby 1.9.2, the current working directory is no longer part of the load
+path. In the UNIX world, this is considered a good security practice since it
+avoids the issue of accidentally running an unexpected script by simply
+executing a program from a directory that just happens to have a file with the
+same name. Since <code>require_relative</code> is requiring relative to the current file
+instead of the current process, it doesn't have this security issue. That's one
+more reason to use <code>require_relative</code> for relative requires.</p>
+
+<p>One last note about <code>require_relative</code>: Have you ever noticed that using
+<code>require_relative</code> doesn't work on a Ruby REPL like pry? Think about it. If
+<code>require_relative</code> is requiring relative to a file, which file would that be in
+a REPL? Well, there isn't really a file that fits that bill. Your alternatives
+in this situation are to use <code>load</code> or <code>require</code>. If you use <code>require</code> though,
+make sure to remember the leading <code>'./'</code> or <code>'../'</code> and don't do this in
+production code!. And if you ever want to determine what the current working
+directory of your Ruby process is, you can always output <code>Dir.pwd</code>.</p>
+
+<h2>Conclusion</h2>
+
+<p>So, we have seen that <code>require</code>, <code>require_relative</code> and <code>load</code> all fulfil
+different use cases when used as intended. <code>require</code> is generally for
+referencing libraries, <code>require_relative</code> is for making one off local references
+within an application (typically deployed applications, not within libraries)
+and about all <code>load</code> is good for is re-loading a script in a REPL. Well, that's
+how I see it anyway :).</p>
+
+<p>* Prior to version 1.9, Ruby would only do a string comparison between required
+files. So if you require a file using the full path (this is typically what
+happens when requiring a file from the load path) and then require it again with
+a relative path (<code>require './myfile'</code> for example), it could inadvertently be
+run twice. Since Ruby 1.9 however the path to a required file is expanded to the
+full path before attempting to add it to the <code>$LOADED_FEATURES</code> variable. At
+least, that's what it appeared like from my experimentation.</p>
+</div>
+
+</body>
+</html>

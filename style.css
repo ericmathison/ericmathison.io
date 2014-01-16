@@ -1,0 +1,33 @@
+body, hr {
+/* background: #000; */
+background: #111;
+color: #0f0;
+}
+
+nav {
+text-align: center;
+}
+
+h1  {
+text-align: center;
+}
+
+p, li {
+line-height: 22px;
+}
+
+code {
+background: #555;
+border: 1px solid #666;
+border-radius: 2px;
+}
+
+.container {
+width: 80%;
+margin: 0 auto;
+margin-bottom: 50px;
+}
+
+.home-page-group {
+padding-bottom: 5px;
+}
