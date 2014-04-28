@@ -1,7 +1,7 @@
 body, hr {
 /* background: #000; */
-background: #111;
-color: #0f0;
+background: white;
+color: black;
 }
 
 nav {
@@ -17,7 +17,7 @@ line-height: 22px;
 }
 
 code {
-background: #555;
+background: #eee;
 border: 1px solid #666;
 border-radius: 2px;
 }
