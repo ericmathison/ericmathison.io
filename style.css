@@ -7,21 +7,28 @@ body, hr {
 background: white url('binding_dark.png');
 
 color: #0dc704;
-font-family: 'Abel', sans-serif;
-font-size: 125%;
+font-family: 'Roboto', sans-serif;
+font-size: 17px;
 }
 
 nav {
 text-align: center;
 }
 
-h1  {
-text-align: center;
+h1, h2, h3, h4, h5, h6 {
 font-family: 'Rokkitt', serif;
 }
 
+h1  {
+text-align: center;
+}
+
+h4 {
+line-height: 0;
+}
+
 p, li {
-line-height: 22px;
+line-height: 25px;
 }
 
 code {
@@ -38,4 +45,6 @@ margin-bottom: 50px;
 
 .home-page-group {
 padding-bottom: 5px;
+font-size: 20px;
+font-family: 'Abel', sans-serif;
 }
