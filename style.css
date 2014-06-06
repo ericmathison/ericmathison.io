@@ -7,6 +7,8 @@ body, hr {
 background: white url('binding_dark.png');
 
 color: #0dc704;
+font-family: 'Abel', sans-serif;
+font-size: 125%;
 }
 
 nav {
@@ -15,6 +17,7 @@ text-align: center;
 
 h1  {
 text-align: center;
+font-family: 'Rokkitt', serif;
 }
 
 p, li {
