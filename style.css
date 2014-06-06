@@ -4,7 +4,7 @@ body, hr {
    This pattern is downloaded from www.subtlepatterns.com
    If you need more, that's where to get'em.
    ======================================================== */
-background: white url('binding_dark.png');
+background: url('binding_dark.png');
 
 color: #0dc704;
 font-family: 'Roboto', sans-serif;
