@@ -1,7 +1,12 @@
 body, hr {
-/* background: #000; */
-background: white;
-color: black;
+
+/* ========================================================
+   This pattern is downloaded from www.subtlepatterns.com
+   If you need more, that's where to get'em.
+   ======================================================== */
+background: white url('binding_dark.png');
+
+color: #0dc704;
 }
 
 nav {
@@ -17,7 +22,7 @@ line-height: 22px;
 }
 
 code {
-background: #eee;
+background: #555;
 border: 1px solid #666;
 border-radius: 2px;
 }
