@@ -1,50 +1,85 @@
 body, hr {
+    background: #859255;
+    font-family: Helvetica, sans-serif;
+    font-size: 17px;
+}
 
-/* ========================================================
-   This pattern is downloaded from www.subtlepatterns.com
-   If you need more, that's where to get'em.
-   ======================================================== */
-background: url('binding_dark.png');
+main {
+    width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+}
 
-color: #0dc704;
-font-family: 'Roboto', sans-serif;
-font-size: 17px;
+a {
+    text-decoration: none;
+    border-bottom: 2px solid;
+    font-size: 20px;
+    color: #555;
+}
+
+a:hover {
+    border-bottom: 2px solid;
+    color: #333;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 100px;
 }
 
 nav {
-text-align: center;
+    text-align: center;
 }
 
 h1, h2, h3, h4, h5, h6 {
-font-family: 'Rokkitt', serif;
+    font-family: Helvetica, serif;
 }
 
-h1  {
-text-align: center;
+h1 {
+    text-align: center;
+}
+
+h2 {
+    font-size: 25px;
+    margin-bottom: 5px
 }
 
 h4 {
-line-height: 0;
+    line-height: 0;
 }
 
 p, li {
-line-height: 25px;
+    line-height: 25px;
+}
+
+li {
+    list-style-type: square;
 }
 
 code {
-background: #555;
-border: 1px solid #666;
-border-radius: 2px;
+    background: #999;
+    border: 1px solid #777;
+    border-radius: 6px;
 }
 
-.container {
-width: 80%;
-margin: 0 auto;
-margin-bottom: 50px;
+h2 {
+    border-bottom: 2px solid;
 }
 
 .home-page-group {
-padding-bottom: 5px;
-font-size: 20px;
-font-family: 'Abel', sans-serif;
+    padding-bottom: 30px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.home-page-group h2 {
+    border: 0;
+}
+
+::-moz-selection {
+    background: steelblue;
+}
+::selection {
+    background: steelblue;
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>Eric Mathison | Understanding require and Friends in Ruby</title>
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="../style.css">
 <link href='http://fonts.googleapis.com/css?family=Rokkitt:700|Roboto' rel='stylesheet' type='text/css'>
 <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head><body>
@@ -9,7 +9,7 @@
 	<a href="/">Home</a>
 </nav>
 
-<div class="container">
+<main>
 <h1>Understanding <code>require</code> and Friends in Ruby</h1>
 
 <h4>Author: Eric Mathison</h4>
@@ -207,7 +207,7 @@ a relative path (<code>require './myfile'</code> for example), it could inadvert
 run twice. Since Ruby 1.9 however the path to a required file is expanded to the
 full path before attempting to add it to the <code>$LOADED_FEATURES</code> variable. At
 least, that's what it appeared like from my experimentation.</p>
-</div>
+</main>
 
 </body>
 </html>
