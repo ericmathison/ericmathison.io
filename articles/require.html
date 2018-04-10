@@ -14,17 +14,15 @@
 
 <h4>Author: Eric Mathison</h4>
 
-<h4>Date: Sat Sep 14 17:06:03 PDT 2013</h4>
+<h4>Date: September 14, 2013</h4>
 
-<h4>Last edited: Fri Sep 27 22:56:01 PDT 2013</h4>
-
-<h4>Last checked for accuracy and currency: Fri Sep 27 22:56:01 PDT 2013</h4>
+<h4>Last edited: April 10, 2018</h4>
 
 <p>Ruby's <code>require</code> method is a tool for referencing and executing code that is
 not actually contained in the current file. My initial attempts at using
 <code>require</code> left me a bit confused. Not until later did I realize that Ruby's
 <code>require</code> method sits atop something more organized and elegant than I had
-realized. It turns out that <code>require</code>s main use case is generally not one off,
+realized. It turns out that <code>require</code>'s main use case is generally not one off,
 relative references to other random Ruby files as I had expected. Instead,
 <code>require</code> is generally used to look in certain pre-determined directory
 locations for Ruby libraries. I had previously sort of assumed that a require
@@ -90,8 +88,8 @@ actually require it first. But things work essentially the same as if every
 single gem's lib directory was on the load path.</p>
 
 <p>Slightly unrelated to the topic of this article but perhaps also interesting to
-note is that RubyGems will also add the contents of a gem's bin directory to the
-UNIX <code>$PATH</code> variable so that a gem's executables can be run from the terminal.</p>
+note is that RubyGems will also add a gem's bin directory to the UNIX <code>$PATH</code>
+variable so that a gem's executables can be run from the terminal.</p>
 
 <h2>Understanding <code>load</code></h2>
 
@@ -104,7 +102,10 @@ it was with <code>require</code>.</p>
 
 <p>All in all, I would say that <code>load</code> has a fairly small amount of usefulness.
 Probably it's main use case is re-running a file from a Ruby REPL (like pry or
-irb) after making some edits.</p>
+irb) after making some edits.  It's also very helpful when you need to load ruby
+files that do not have a .rb extension since <code>require</code> will automatically look
+for files ending in .rb.  This situation can occur when trying to load ruby
+script files or executables which tend not to have an extension.</p>
 
 <h2>Understanding <code>require_relative</code></h2>
 
@@ -118,7 +119,7 @@ executing code on the load path (code that would be considered a library).
 That's for good reason. That's what it is good for and you probably shouldn't be
 using <code>require</code> for anything else.</p>
 
-<p>In the past (Ruby 1.8 and earlier), if you wanted to to a one off <code>require</code>
+<p>In the past (Ruby 1.8 and earlier), if you wanted to do a one off <code>require</code>
 without managing the load path, the best way would have been to generate the
 full path to that file and pass it as an argument to <code>require</code>. It would look
 something like this:</p>
@@ -165,8 +166,8 @@ example). These techniques are not 100% equivalent though. Ruby's implementation
 of <code>require_relative</code> actually references the call stack (not <code>__FILE__</code>) in
 order to determine which file the references are relative to. So in a config.ru
 file which is used to start a Rack application, it is not currently possible to
-use <code>require_relative</code> as the contents of this file are ran through the <code>eval</code>
-method instead of being ran directly. That means that Ruby can't determine which
+use <code>require_relative</code> as the contents of this file are run through the <code>eval</code>
+method instead of being run directly. That means that Ruby can't determine which
 file to be relative to.</p>
 
 <p>Also note that even if you are running current_file.rb from it's containing
