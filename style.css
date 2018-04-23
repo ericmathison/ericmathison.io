@@ -71,6 +71,10 @@ p, li {
     line-height: 25px;
 }
 
+p {
+    font-size: 22px;
+}
+
 li {
     list-style-type: square;
 }
