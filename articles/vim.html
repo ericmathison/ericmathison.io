@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Eric Mathison | Understanding require and Friends in Ruby</title>
+<link rel="stylesheet" href="../style.css">
+<link href='http://fonts.googleapis.com/css?family=Rokkitt:700|Roboto' rel='stylesheet' type='text/css'>
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head><body>
+
+<nav>
+	<a href="/">Home</a>
+</nav>
+
+<main>
+<h1>A Minimalist's Guide to Vim</h1>
+
+<h4>Author: Eric Mathison</h4>
+
+<h4>Date: May 14, 2018</h4>
+
+<h4>Last edited: May 14, 2018</h4>
+
+<p>People love to customize Vim. That's great to an extent. It's terrible when it means loosing some of the really great advantages of doing things "The Vim Way"®. By all means, try things out, mix it up, and see what works for you. This is the story my journey through customizing Vim, what I learned in the process, and why I've decided to go back to the basics.</p>
+
+<h2>Get in, Get out</h2>
+
+<p>Emacs users love to live in Emacs. This is not the Vim way. Vim is known for getting in and getting out. I've noticed a trend however of doing more and more from inside Vim. Examples include the ctrlp plugin (a fuzzy file finder), running tests from inside Vim, and even handling version control à la Fugitive (a plugin for git). This workflow is essentially treating Vim like Emacs. But if Emacs were a tank, Vim would be a dirtbike. As a Vim user, I prefer to let Vim do one thing and do it well—editing text.</p>
+
+<h2>The Journey</h2>
+
+<p>I remember watching someone use ctrlp for the first time. I was amazed at how fast they went from file to file—all with just a few keystrokes. I joined the bandwagon. After a while though it dawned on me that finding files wasn't really the domain of an editor. I thought, there must be a way to fuzzy match a file and simply pass it to Vim as in: <code>vi some/file.rb</code>. In fact there was! It’s called fzf (https://github.com/junegunn/fzf). At some point though, I realized if I wanted to go to the file I just edited I didn't really need any special plugins or fancy whizbangs. It's as simple as typing <code>vi&lt;enter&gt;</code> and then hitting <code>&lt;ctrl-o&gt;</code> twice. All my history is at the tip of my fingers. <code>&lt;ctrl-o&gt;</code> follows my steps backward and <code>&lt;ctrl-i&gt;</code> jumps instantly forward through anything I've been editing. Then again, with a shell like Fish that seems to know what file I want to edit before I do and gives file completion hints right out of the box, even this seems like too much typing sometimes.</p>
+
+<h2>Learn Useful Defaults, Customize When Critical</h2>
+
+<p>Being able to use the same Vim setup just about anywhere is pretty incredible. Exiting Vim is one of those critical places where customization is key. I remap <code>&lt;leader&gt;q</code> and <code>&lt;leader&gt;w</code> to <code>ZQ</code> and <code>ZZ</code> respectively. So on my setup, to exit Vim without saving, I type <code>\q</code>. Two characters and I'm gone. I hate the shift key. Just think, <code>:q!</code> requires hitting shift twice! With another key awkwardly placed in between! <code>:wq</code> is a bit more reasonable so I often just stick with the default there but it really shouldn't take an eternity to open and close Vim. Get in, get the job done, and get out. That's the Vim way.</p>
+</main>
+
+</body>
+</html>
