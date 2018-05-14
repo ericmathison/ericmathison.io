@@ -16,6 +16,7 @@ a {
     font-size: 20px;
     color: #555;
     position: relative;
+    line-height: 42px;
 }
 
 a:hover {
@@ -60,7 +61,8 @@ h1 {
 
 h2 {
     font-size: 25px;
-    margin-bottom: 5px
+    margin-bottom: 5px;
+    margin-top: 74px;
 }
 
 h4 {
@@ -68,11 +70,12 @@ h4 {
 }
 
 p, li {
-    line-height: 25px;
+    line-height: 35px;
 }
 
 p {
     font-size: 22px;
+    margin-top: 40px;
 }
 
 li {
@@ -97,6 +100,7 @@ h2 {
 
 .home-page-group h2 {
     border: 0;
+    margin-top: 30px;
 }
 
 ::-moz-selection {
