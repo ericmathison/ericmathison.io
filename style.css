@@ -41,10 +41,18 @@ a:hover::after {
     width: 100%;
 }
 
-img {
+.globe {
     display: block;
     margin: 0 auto;
     margin-bottom: 100px;
+}
+
+.stack img {
+    margin: 15px;
+}
+
+.stack a {
+    border: none;
 }
 
 nav {
