@@ -109,3 +109,7 @@ h2 {
 ::selection {
     background: steelblue;
 }
+
+.sub-title span {
+    padding: 15px;
+}
